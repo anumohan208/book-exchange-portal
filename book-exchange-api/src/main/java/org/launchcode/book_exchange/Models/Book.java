@@ -44,6 +44,10 @@ public class Book {
         this.addedDate = addedDate;
     }
 
+    public Book() {
+
+    }
+
     public Long getId() {
         return id;
     }
