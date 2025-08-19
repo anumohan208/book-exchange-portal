@@ -92,7 +92,7 @@ public class Book {
         this.eventImage = eventImage;
     }
 
-    public boolean isAvailable() {
+    public boolean getAvailable() {
         return available;
     }
 
