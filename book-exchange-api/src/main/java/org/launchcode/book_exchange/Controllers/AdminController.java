@@ -68,7 +68,6 @@ public class AdminController {
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
         if (!bookRepository.existsById(id)) {
-            // if event is not found
             return ResponseEntity.notFound().build();
         }
         bookRepository.deleteById(id);
