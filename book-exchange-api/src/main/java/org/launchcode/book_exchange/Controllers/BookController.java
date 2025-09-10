@@ -1,5 +1,6 @@
 package org.launchcode.book_exchange.Controllers;
 
+import jakarta.validation.Valid;
 import org.launchcode.book_exchange.Models.Book;
 import org.launchcode.book_exchange.Repositories.BookRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,6 +61,37 @@ public class BookController {
 
         Book savedEvent = bookRepository.save(book);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedEvent);
+    }
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteBook(@PathVariable Long id) {
+        if (!bookRepository.existsById(id)) {
+            return ResponseEntity.notFound().build();
+        }
+        bookRepository.deleteById(id);
+        return ResponseEntity.noContent().build();
+    }
+    @PutMapping("{id}")
+    public ResponseEntity<Book> updateBook(@PathVariable Long id,
+                                           @RequestBody @Valid Book book) {
+
+        Optional<Book> bookOptional = bookRepository.findById(id);
+        if (bookOptional.isPresent( )) {
+            Book existingBook = bookOptional.get( );
+
+            existingBook.setTitle(book.getTitle());
+            existingBook.setAuthor(book.getAuthor());
+            existingBook.setDescription(book.getDescription());
+            existingBook.setConditionStatus(book.getConditionStatus());
+            existingBook.setAvailable(book.getAvailable());
+            existingBook.setOwner(book.getOwner());
+            existingBook.setAddedDate(book.getAddedDate());
+
+            Book updatedBook = bookRepository.save(existingBook);
+            return ResponseEntity.ok(updatedBook);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
     @GetMapping("/{id}/image")
     public ResponseEntity<byte[]> getBookImage(@PathVariable Long id) {
