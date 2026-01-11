@@ -37,7 +37,7 @@ const AdminDashboard = () => {
 
   return (
     <div className="admin-dashboard-container">
-      <h2>Admin Dashboard</h2>
+      <h2>Admin Operations</h2>
       <div className="dashboard-actions">
         <Link to="/books/create" className="btn btn-primary">
           Add New Book
